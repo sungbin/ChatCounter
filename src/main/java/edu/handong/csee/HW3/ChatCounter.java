@@ -16,21 +16,21 @@ public class ChatCounter {
 		ArrayList<DataStorage> ds = new ArrayList<DataStorage>();
 		FileLoader fl = new FileLoader();
 		FileOuter fo = new FileOuter();
-		String Fname;
+		String inputName, outputName = null;
 		
 		while(true)
 		{
-			System.out.println("파일 이름을 입력하세요. (끝내기 n)");
+			System.out.println("Enter input name (exit: n)");
 			
-			Fname = in.nextLine();
-			if(Fname.equals("n"))
+			inputName = in.nextLine();
+			if(inputName.equals("n"))
 				break;// will be exception
 			//else if ... Exception
 			
-			ds.add(fl.load(Fname));
+			ds.add(fl.load(inputName)); //-> ds 에 데이터 저장.
 		}
-		
-		fo.out(ds);
+		System.out.println();
+		fo.out(ds,outputName); //-> ds에 있는 데이타를 종합해서 outputname으로 파일을 만듬.
 		
 	}
 
