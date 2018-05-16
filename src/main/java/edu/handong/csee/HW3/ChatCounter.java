@@ -29,8 +29,7 @@ public class ChatCounter {
 			
 			ds.add(fl.load(inputName));
 		}
-		fo.out(ds,outputName); 
-		System.out.println("made "+outputName);
+		fo.out(ds,outputName);
 		
 	}
 

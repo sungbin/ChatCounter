@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 public class patternSecond implements FindPattern{
 
 	public boolean existPattern(String line) {
+		if(line == null)
+			return false; //exception
+		
 		Pattern p = Pattern.compile("(\\[)(\\S*)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
 		Matcher m = p.matcher(line);
 		
@@ -16,6 +19,7 @@ public class patternSecond implements FindPattern{
 	}
 
 	public String return_kakao_name(String line) {
+		
 		Pattern p = Pattern.compile("(\\[)(\\S*)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
 		Matcher m = p.matcher(line);
 		

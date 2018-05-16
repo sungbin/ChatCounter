@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class DataStorage {
 	PatternCheck pt = new PatternCheck();
 	ArrayList<String> kakao_id = new ArrayList<String>();
-	ArrayList<Integer> count = null;
+	ArrayList<Integer> count = new ArrayList<Integer>();
 	
 	
 	
@@ -40,15 +40,19 @@ public class DataStorage {
 			gottenIndex = pt.getIndexByname(kakao_id, name);
 		}
 		
-		if(count != null)
+		if(count.size()==0)
 		{
-			temp = count.get(gottenIndex);
-			count.remove(gottenIndex);
+			temp = 0;
+			gottenIndex = 0;
+		}
+		else if(count.size()==gottenIndex)
+		{
+			temp = 0;
 		}
 		else
 		{
-			count = new ArrayList<Integer>();
-			temp = 0;
+			temp = count.get(gottenIndex);
+			count.remove(gottenIndex);
 		}
 		count.add(gottenIndex, temp+1);
 		

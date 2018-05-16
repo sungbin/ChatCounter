@@ -15,6 +15,7 @@ public class FileLoader {
 			br = new BufferedReader(new FileReader(fname));
 			String line = null;
 			while(pc.check(line = br.readLine())) {
+				System.out.println(line+"---");
 				ds.appoint(line);
 			}
 		} catch (Exception e) {

@@ -8,7 +8,7 @@ public class FileOuter {
 
 		PatternCheck pt = new PatternCheck();
 		ArrayList<String> all_id_list = new ArrayList<String>();
-		ArrayList<Integer> all_count_list = null;
+		ArrayList<Integer> all_count_list = new ArrayList<Integer>();
 		int i;
 		
 		for(DataStorage data : ds)
@@ -30,14 +30,18 @@ public class FileOuter {
 				}
 				
 				
-				if(all_count_list != null)
+				if(all_count_list.size()==0)
+				{
+					temp = 0;
+					gottenIndex = 0;
+				}
+				else if(all_count_list.size()==gottenIndex)
+					temp = 0;
+				
+				else
 				{
 					temp = all_count_list.get(gottenIndex);
 					all_count_list.remove(gottenIndex);
-				}
-				else
-				{
-					all_count_list = new ArrayList<Integer>();
 				}
 				all_count_list.add(gottenIndex, temp+count_list.get(i));
 				
@@ -47,7 +51,7 @@ public class FileOuter {
 		i=0;
 		for(String id : all_id_list )
 		{
-			System.out.print(id + ", " + all_count_list.get(i));
+			System.out.println(id + ", " + all_count_list.get(i));
 			
 			i++;
 		}
