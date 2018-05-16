@@ -10,10 +10,6 @@ public class FileLoader {
 		BufferedReader br = null;
 		PatternCheck pc = new PatternCheck();
 		
-		//fname에서 한 줄을 받아드린다.
-		//그 한 줄을 pattern 검사 한다.
-		//검사한 값을 ds에 넣는다.
-		//반복하다가 ds를 return 한다.
 		
 		try {
 			br = new BufferedReader(new FileReader(fname));
@@ -24,7 +20,6 @@ public class FileLoader {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return ds;
 	}

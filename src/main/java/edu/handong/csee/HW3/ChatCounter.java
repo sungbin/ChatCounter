@@ -27,10 +27,10 @@ public class ChatCounter {
 				break;// will be exception
 			//else if ... Exception
 			
-			ds.add(fl.load(inputName)); //-> ds 에 데이터 저장.
+			ds.add(fl.load(inputName));
 		}
-		System.out.println();
-		fo.out(ds,outputName); //-> ds에 있는 데이타를 종합해서 outputname으로 파일을 만듬.
+		fo.out(ds,outputName); 
+		System.out.println("made "+outputName);
 		
 	}
 
