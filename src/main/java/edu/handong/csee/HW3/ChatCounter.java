@@ -17,7 +17,8 @@ public class ChatCounter {
 		FileLoader fl = new FileLoader();
 		FileOuter fo = new FileOuter();
 		String inputName, outputName = null;
-		
+
+		System.out.println("Example: Input1.txt, Input2.txt, Input3.txt");
 		while(true)
 		{
 			System.out.println("Enter input name (exit: n)");
