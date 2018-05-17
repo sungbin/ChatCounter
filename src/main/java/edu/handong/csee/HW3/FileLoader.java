@@ -14,8 +14,11 @@ public class FileLoader {
 		try {
 			br = new BufferedReader(new FileReader(fname));
 			String line = null;
-			while(pc.check(line = br.readLine())) {
-				ds.appoint(line);
+			while((line = br.readLine()) != null) {
+				if(pc.check(line))
+				{
+					ds.appoint(line);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

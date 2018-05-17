@@ -9,7 +9,7 @@ public class patternSecond implements FindPattern{
 		if(line == null)
 			return false; //exception
 		
-		Pattern p = Pattern.compile("(\\[)(\\S*)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
+		Pattern p = Pattern.compile("(\\[)((?:\\D|\\d)+)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
 		Matcher m = p.matcher(line);
 		
 		if(m.find())
@@ -20,7 +20,7 @@ public class patternSecond implements FindPattern{
 
 	public String return_kakao_name(String line) {
 		
-		Pattern p = Pattern.compile("(\\[)(\\S*)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
+		Pattern p = Pattern.compile("(\\[)((?:\\D|\\d)+)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
 		Matcher m = p.matcher(line);
 		
 		if(m.find())
