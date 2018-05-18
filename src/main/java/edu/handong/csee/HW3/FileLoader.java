@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 public class FileLoader {
 
+	/**
+	 * call in Data.
+	 * and Output result as ArrayList <DataStorage> type.
+	 */
 	public DataStorage load(String fname, String path) {
 		DataStorage ds = new DataStorage();
 		PatternCheck pc = new PatternCheck();
@@ -13,7 +17,9 @@ public class FileLoader {
 
 		
 		try {
-			inputStream = new Scanner(new File("data/"+fname),"UTF-8");
+			File f=new File(path+fname);
+			System.out.println(f.getAbsolutePath());
+			inputStream = new Scanner(f,"UTF-8");
 			String line = null;
 			while(inputStream.hasNextLine()) {
 				line = inputStream.nextLine();

@@ -25,14 +25,17 @@ public class ChatCounter {
 		String inputName, outputName = null;
 		String path = null;
 		
-		System.out.println("Path를 입력하세요.(아무것도 입력하지 않으면 C:\\Users\\tjdql\\Git\\ChatCounter\\Data)");
+		System.out.println("Path를 입력하세요.(아무것도 입력하지 않으면 C:\\Users\\tjdql\\Git\\ChatCounter\\data\\)");
 		path=in.nextLine();
 		if(path.equals(""))
-			path = "C:\\Users\\tjdql\\Git\\ChatCounter\\Data\\";
+		{
+			path = "C:\\Users\\tjdql\\Git\\ChatCounter\\data\\";
+			System.out.println("Example: 자바-L18.csv, 자바-L7.txt, 자바-L6.csv");
+			
+		}
 		
 		//else if() // will be Exception
 
-		System.out.println("Example: 자바-L18.csv, 자바-L7.txt, 자바-L6.csv");
 		while(true)
 		{
 			System.out.println("Enter input name (exit: n)");

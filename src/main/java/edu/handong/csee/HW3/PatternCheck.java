@@ -1,6 +1,11 @@
 package edu.handong.csee.HW3;
 
 import java.util.ArrayList;
+
+/**
+ * are there Pattern in data?
+ * return true or false
+ */
 public class PatternCheck {
 	private PatternFirst pf = new PatternFirst();
 	private patternSecond ps = new patternSecond();
@@ -12,6 +17,9 @@ public class PatternCheck {
 		return false;
 	}
 
+	/**
+	 * if data name is duplicated, get its index number.
+	 */
 	public int getIndexByname(ArrayList<String> arr,String pName)
     {
         for(String item : arr)
@@ -22,6 +30,9 @@ public class PatternCheck {
         return -1;
     }
 
+	/**
+	 * if Pattern exist, return the name.
+	 */
 	public String whatName(String line) {
 		if(pf.existPattern(line))
 			return pf.return_kakao_name(line);

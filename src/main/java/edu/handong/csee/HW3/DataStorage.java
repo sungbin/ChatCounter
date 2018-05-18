@@ -8,12 +8,17 @@ public class DataStorage {
 	
 	
 	
+	/**
+	 * get member variable kakao_id ArrayList
+	 */
 	public ArrayList<String> getKakao_id() {
 		return kakao_id;
 	}
 
 
-
+	/**
+	 * get member variable count ArrayList
+	 */
 	public ArrayList<Integer> getCount() {
 		return count;
 	}
@@ -21,7 +26,8 @@ public class DataStorage {
 
 
 	/**
-	 * 
+	 * calculate input data, considering name already exist.
+	 * and put them to Frame Work store(ArrayList)
 	 */
 	public void appoint(String line) {
 		String name="";
