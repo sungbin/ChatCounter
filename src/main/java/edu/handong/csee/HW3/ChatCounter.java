@@ -6,11 +6,17 @@ import java.util.ArrayList;
 public class ChatCounter {
 	Scanner in = new Scanner(System.in);
 
+	/**
+	 * @param main method
+	 */
 	public static void main(String[] args) {
 		ChatCounter count = new ChatCounter();
 		count.run();
 	}
 	
+	/**
+	 * support main method
+	 */
 	public void run()
 	{
 		ArrayList<DataStorage> ds = new ArrayList<DataStorage>();
@@ -23,6 +29,8 @@ public class ChatCounter {
 		path=in.nextLine();
 		if(path.equals(""))
 			path = "C:\\Users\\tjdql\\Git\\ChatCounter\\Data\\";
+		
+		//else if() // will be Exception
 
 		System.out.println("Example: 자바-L18.csv, 자바-L7.txt, 자바-L6.csv");
 		while(true)

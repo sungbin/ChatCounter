@@ -2,8 +2,8 @@ package edu.handong.csee.HW3;
 
 import java.util.ArrayList;
 public class PatternCheck {
-	PatternFirst pf = new PatternFirst();
-	patternSecond ps = new patternSecond();
+	private PatternFirst pf = new PatternFirst();
+	private patternSecond ps = new patternSecond();
 
 	public boolean check(String string) {
 		if(pf.existPattern(string)||ps.existPattern(string))

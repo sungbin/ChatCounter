@@ -2,9 +2,9 @@ package edu.handong.csee.HW3;
 
 import java.util.ArrayList;
 public class DataStorage {
-	PatternCheck pt = new PatternCheck();
-	ArrayList<String> kakao_id = new ArrayList<String>();
-	ArrayList<Integer> count = new ArrayList<Integer>();
+	private PatternCheck pt = new PatternCheck();
+	private ArrayList<String> kakao_id = new ArrayList<String>();
+	private ArrayList<Integer> count = new ArrayList<Integer>();
 	
 	
 	
