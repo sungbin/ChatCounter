@@ -5,6 +5,10 @@ import java.util.regex.Matcher;
 
 public class PatternFirst implements FindPattern{
 	
+	/**
+	 * Find regular expression1
+	 * if founded, return true, else return false
+	 */
 	public boolean existPattern(String line) {
 		if(line == null)
 			return false; //exception
@@ -17,7 +21,10 @@ public class PatternFirst implements FindPattern{
 
 		return false;
 	}
-
+	
+	/**
+	 * Through regular Expression, return name.
+	 */
 	public String return_kakao_name(String line) {
 
 		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\")(\\S*)(\"\\,)");
