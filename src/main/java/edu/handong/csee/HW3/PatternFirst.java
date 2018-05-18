@@ -9,7 +9,7 @@ public class PatternFirst implements FindPattern{
 		if(line == null)
 			return false; //exception
 		
-		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\\s)(\\S*)(\\,\")");
+		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\")(\\S*)(\"\\,)");
 		Matcher m = p.matcher(line);
 		
 		if(m.find())
@@ -20,7 +20,7 @@ public class PatternFirst implements FindPattern{
 
 	public String return_kakao_name(String line) {
 
-		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\\s)(\\S*)(\\,\")");
+		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\")(\\S*)(\"\\,)");
 		Matcher m = p.matcher(line);
 		
 		if(m.find())

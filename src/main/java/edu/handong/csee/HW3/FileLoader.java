@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class FileLoader {
 
-	public DataStorage load(String fname) {
+	public DataStorage load(String fname, String path) {
 		DataStorage ds = new DataStorage();
 		PatternCheck pc = new PatternCheck();
 
@@ -13,7 +13,6 @@ public class FileLoader {
 
 		
 		try {
-			
 			inputStream = new Scanner(new File("data/"+fname),"UTF-8");
 			String line = null;
 			while(inputStream.hasNextLine()) {
