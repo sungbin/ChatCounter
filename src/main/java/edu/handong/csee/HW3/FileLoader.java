@@ -1,25 +1,31 @@
 package edu.handong.csee.HW3;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.util.Scanner;
 
 public class FileLoader {
 
 	public DataStorage load(String fname) {
 		DataStorage ds = new DataStorage();
-		BufferedReader br = null;
 		PatternCheck pc = new PatternCheck();
-		
+
+		Scanner inputStream = null;
+
 		
 		try {
-			br = new BufferedReader(new FileReader(fname));
+			
+			inputStream = new Scanner(new File("data/"+fname),"UTF-8");
 			String line = null;
-			while((line = br.readLine()) != null) {
+			while(inputStream.hasNextLine()) {
+				line = inputStream.nextLine();
+				System.out.println(line);
 				if(pc.check(line))
 				{
 					ds.appoint(line);
 				}
 			}
+			inputStream.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

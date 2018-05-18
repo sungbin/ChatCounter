@@ -18,7 +18,7 @@ public class ChatCounter {
 		FileOuter fo = new FileOuter();
 		String inputName, outputName = null;
 
-		System.out.println("Example: Input1.txt, Input2.txt, Input3.txt");
+		System.out.println("Example: 자바-L18.csv, 자바-L7.txt, 자바-L6.csv");
 		while(true)
 		{
 			System.out.println("Enter input name (exit: n)");
