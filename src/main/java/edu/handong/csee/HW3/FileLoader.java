@@ -1,6 +1,7 @@
 package edu.handong.csee.HW3;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileLoader {
@@ -9,10 +10,12 @@ public class FileLoader {
 	 * call in Data.
 	 * and Output result as ArrayList <DataStorage> type.
 	 */
-	public DataStorage load(String fname, String path) {
-		DataStorage ds = new DataStorage();
+	public ArrayList<DataStorage> load(String fname, String path) {
+		ArrayList<DataStorage> ds = new ArrayList<DataStorage>();
 		PatternCheck pc = new PatternCheck();
-
+		PatternFirst pf = new PatternFirst();
+		patternSecond ps = new patternSecond();
+		
 		Scanner inputStream = null;
 
 		
@@ -23,10 +26,12 @@ public class FileLoader {
 			String line = null;
 			while(inputStream.hasNextLine()) {
 				line = inputStream.nextLine();
-				System.out.println(line);
 				if(pc.check(line))
 				{
-					ds.appoint(line);
+					if(pf.existPattern(line))
+						ds.add(pf.makeData(line));
+					else if(ps.existPattern(line))
+						ds.add(ps.makeData(line));
 				}
 			}
 			inputStream.close();
@@ -37,6 +42,9 @@ public class FileLoader {
 		
 		return ds;
 	}
+
+	//String fileList[] = path.list(new FilenameFilter() {
+
 
 
 

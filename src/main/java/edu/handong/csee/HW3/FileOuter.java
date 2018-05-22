@@ -1,8 +1,15 @@
 package edu.handong.csee.HW3;
 
+import java.util.Collections;
+import java.util.Comparator;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class FileOuter {
 	private HashMap<String, Integer> all_list = new HashMap<String, Integer>();
@@ -12,36 +19,31 @@ public class FileOuter {
 	 * and print them.
 	 */
 	public void out(ArrayList<DataStorage> ds, String outputName) {
-
-		int i;
+		
+		ds = checkDuplicate(ds);
+		Collections.sort(ds);
 		
 		for(DataStorage data : ds)
 		{
-			ArrayList<String> id_list =  data.getKakao_id();
-			ArrayList<Integer> count_list = data.getCount();
-			int temp=0;
-			i =0;
-			
-			for(String id : id_list)
-			{
-				temp = 0;
-				if(all_list.containsKey(id))
-				{
-					temp = all_list.get(id);
-				}
-				all_list.put(id, temp+count_list.get(i));
-				
-				i++;
-			}
+			System.out.println(data);
 		}
-		// add makeResultFile(all_list)
-		i=0;
-		Iterator<String> key2 = all_list.keySet().iterator();
-		while(key2.hasNext())
+		for(DataStorage data : ds)
 		{
-			String key = key2.next();
-			System.out.println(key + ", " + all_list.get(key));
+			if(all_list.containsKey(data.getKakao_id()))
+				all_list.put(data.getKakao_id(),all_list.get(data.getKakao_id())+1);
+			else
+				all_list.put(data.getKakao_id(),1);
 		}
+
+		Iterator it = FileOuter.sortByValue(all_list).iterator();
+		
+		while(it.hasNext())
+		{
+			String temp = (String) it.next();
+			System.out.println(temp + ", " + all_list.get(temp));
+		}
+		
+		
 		
 	}
 	/**
@@ -51,5 +53,24 @@ public class FileOuter {
 	{
 		
 	}
+	
+	private static ArrayList<DataStorage> checkDuplicate(ArrayList<DataStorage> ds)
+	{
+		HashSet<DataStorage> arr = new HashSet<DataStorage>(ds);
+		
+		ArrayList<DataStorage> arr2 = new ArrayList<DataStorage>(arr);
+		
+		return arr2;
 
+	}
+
+
+	public static List sortByValue(final Map map){ 
+		List list = new ArrayList();
+	list.addAll(map.keySet());
+	Collections.sort(list,new Comparator(){ public int compare(Object o1,Object o2){ Object v1 = map.get(o1);
+	Object v2 = map.get(o2); return ((Comparable) v1).compareTo(v2); } });
+	Collections.reverse(list); // 주석시 오름차순 
+	return list; 
+	}
 }

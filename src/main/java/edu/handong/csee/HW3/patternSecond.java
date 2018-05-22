@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class patternSecond implements FindPattern{
 
+	final static String pattern = "\\[(.*?)\\]\\s\\[(?:(.*)?\\s|(.?))(\\d+):(\\d+)(?:\\s([A-Z]{2})|.?)\\]\\s(.*?)";
 	/**
 	 * Find regular expression1
 	 * if founded, return true, else return false
@@ -13,7 +14,7 @@ public class patternSecond implements FindPattern{
 		if(line == null)
 			return false; //exception
 		
-		Pattern p = Pattern.compile("(\\[)((?:\\D|\\d)+)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
+		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(line);
 		
 		if(m.find())
@@ -25,26 +26,60 @@ public class patternSecond implements FindPattern{
 	/**
 	 * Through regular Expression, return name.
 	 */
-	public String return_kakao_name(String line) {
+	public DataStorage makeData(String line) {
+
+
 		
-		Pattern p = Pattern.compile("(\\[)((?:\\D|\\d)+)(\\])(\\s\\[.*(?:\\d{1}|\\d{2}):\\d{2}.*\\])");
+		DataStorage data = new DataStorage();
+		String name = null, hours = null, minutes = null, message = null;
+		
+		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(line);
 		
-		if(m.find())
+		String amORpm = null;
+		if(m.matches())
 		{
-			String gottenPattern = m.group();
-			int startPattern = m.start(2);
-			int endPattern = m.end(2);
+		if(String.valueOf(m.group(6)).equals("PM")||String.valueOf(m.group(6)).equals("AM"))
+		{
 			
-			String name = gottenPattern.substring(startPattern, endPattern);
-			return name;
+			
+			name = m.group(1);
+			hours = m.group(4);
+			minutes = m.group(5);
+			message = m.group(7);
+			
+			
+			amORpm=m.group(6); //AM, PM
+			
 		}
-		else
-		{
-			//exception
-		} 
 		
-		return null;
-	}
+		if(String.valueOf(m.group(2)).equals("오후")||String.valueOf(m.group(2)).equals("오전"))
+		{
 
-}
+			name = m.group(1);
+			hours = m.group(4);
+			minutes = m.group(5);
+			message = m.group(7);
+			
+			amORpm=m.group(2); //
+			
+			
+		}
+		
+		data.setKakao_id(name);
+		data.setHours(hours);
+		data.setMinutes(minutes);
+		data.setMessage(message);
+	
+		
+		int currentHours = Integer.parseInt(data.getHours());
+	
+		if(amORpm.equals("오후")||amORpm.equals("PM"))
+			currentHours += 12;
+		if (currentHours>24)
+			currentHours -= 24;
+		data.setHours(String.valueOf(currentHours));
+		}
+		return data;
+	}
+	}

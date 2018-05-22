@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 
 public class PatternFirst implements FindPattern{
 	
+	final static String pattern = "(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s)([0-2][0-9]):([0-5][0-9])(:[0-5][0-9]\\,\")((?:\\D|\\d)+)(\"\\,\")((?:\\D|\\d)+)(\")";
+	
 	/**
 	 * Find regular expression1
 	 * if founded, return true, else return false
@@ -13,7 +15,7 @@ public class PatternFirst implements FindPattern{
 		if(line == null)
 			return false; //exception
 		
-		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\")(\\S*)(\"\\,)");
+		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(line);
 		
 		if(m.find())
@@ -25,26 +27,22 @@ public class PatternFirst implements FindPattern{
 	/**
 	 * Through regular Expression, return name.
 	 */
-	public String return_kakao_name(String line) {
-
-		Pattern p = Pattern.compile("(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\\,\")(\\S*)(\"\\,)");
-		Matcher m = p.matcher(line);
+	public DataStorage makeData(String line) {
 		
-		if(m.find())
-		{
-			String gottenPattern = m.group();
-			int startPattern = m.start(2);
-			int endPattern = m.end(2);
+			Pattern p = Pattern.compile(pattern);
+			Matcher m = p.matcher(line);
 			
-			String name = gottenPattern.substring(startPattern, endPattern);
-			return name;
-		}
-		else
-		{
-			//exception
-		} 
-		
-		return null;
+			DataStorage data = null;
+			if(m.matches())
+			{
+			data = new DataStorage();
+			data.setHours(String.valueOf(Integer.parseInt(m.group(2))));
+			data.setKakao_id(m.group(5));
+			data.setMessage(m.group(7));
+			data.setMinutes(String.valueOf(Integer.parseInt(m.group(3))));
+			}
+			
+		return data;
 	}
 
 }

@@ -1,6 +1,8 @@
 package edu.handong.csee.HW3;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 public class ChatCounter {
@@ -19,36 +21,53 @@ public class ChatCounter {
 	 */
 	public void run()
 	{
-		ArrayList<DataStorage> ds = new ArrayList<DataStorage>();
 		FileLoader fl = new FileLoader();
 		FileOuter fo = new FileOuter();
-		String inputName, outputName = null;
+		String outputName = null;
 		String path = null;
 		
-		System.out.println("Path를 입력하세요.(아무것도 입력하지 않으면 C:\\Users\\tjdql\\Git\\ChatCounter\\data\\)");
+		System.out.println("Path를 입력하세요.(아무것도 입력하지 않으면 /Users/imseongbin/Documents/Java/ChatCounter/Data/)");
 		path=in.nextLine();
 		if(path.equals(""))
-		{
-			path = "C:\\Users\\tjdql\\Git\\ChatCounter\\data\\";
-			System.out.println("Example: 자바-L18.csv, 자바-L7.txt, 자바-L6.csv");
-			
-		}
+			path = "/Users/imseongbin/Documents/Java/ChatCounter/Data/";
 		
-		//else if() // will be Exception
-
-		while(true)
+		
+		String[] fileList = ChatCounter.FillInFileList(path);
+		
+		ArrayList<DataStorage> sumOfData = new ArrayList<DataStorage>();
+		
+		for(String filename : fileList)
 		{
-			System.out.println("Enter input name (exit: n)");
 			
-			inputName = in.nextLine();
-			if(inputName.equals("n"))
-				break;// will be exception
-			//else if ... Exception
-			
-			ds.add(fl.load(inputName,path));
+			sumOfData.addAll((fl.load(filename,path)));
 		}
-		fo.out(ds,outputName);
+		fo.out(sumOfData,outputName);
 		
 	}
+
+	private static String[] FillInFileList(String pathAddress) {
+		
+		File file = new File(pathAddress);
+		
+		if(!file.exists())
+			System.out.println("존재하지 않는 디렉토리입니다."); //will be exception
+		
+	        String[] fileList = file.list(new FilenameFilter()
+	        {
+	            @Override
+	            public boolean accept(File dir, String name) 
+	            {
+	            	if(name.endsWith(".txt"))
+	            		return true;
+	            	else if(name.endsWith(".csv"))
+	                	return true;
+	            	else
+	            		return false;
+	            }
+	        });
+	        System.out.println("path 하위 디렉토리에서 읽어드릴 수 있는 파일의 개수: "+fileList.length + "개 입니다.");
+		return fileList;
+	}
+
 
 }

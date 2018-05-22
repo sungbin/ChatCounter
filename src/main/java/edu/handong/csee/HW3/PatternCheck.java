@@ -33,12 +33,13 @@ public class PatternCheck {
 	/**
 	 * if Pattern exist, return the name.
 	 */
+	/*
 	public String whatName(String line) {
 		if(pf.existPattern(line))
 			return pf.return_kakao_name(line);
 		if(ps.existPattern(line))
 			return ps.return_kakao_name(line);
 		return null;
-	}
+	}*/
 
 }
