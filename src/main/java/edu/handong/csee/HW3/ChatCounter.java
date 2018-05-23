@@ -31,6 +31,9 @@ public class ChatCounter {
 		if(path.equals(""))
 			path = "/Users/imseongbin/Documents/Java/ChatCounter/Data/";
 		
+		System.out.println("Output이름을 입력하시오.");
+		outputName = in.nextLine();
+		
 		
 		String[] fileList = ChatCounter.FillInFileList(path);
 		

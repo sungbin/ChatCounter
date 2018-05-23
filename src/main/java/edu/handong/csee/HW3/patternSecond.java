@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class patternSecond implements FindPattern{
 
-	final static String pattern = "\\[(.*?)\\]\\s\\[(?:(.*)?\\s|(.?))(\\d+):(\\d+)(?:\\s([A-Z]{2})|.?)\\]\\s(.*?)";
+	final static String pattern = "\\[(.*?)\\]\\s\\[((.*)?\\s)?(\\d+):(\\d+)(?:\\s([A-Z]{2})|.?)\\]\\s(.*?)";
 	/**
 	 * Find regular expression1
 	 * if founded, return true, else return false
@@ -53,7 +53,7 @@ public class patternSecond implements FindPattern{
 			
 		}
 		
-		if(String.valueOf(m.group(2)).equals("오후")||String.valueOf(m.group(2)).equals("오전"))
+		if(String.valueOf(m.group(3)).equals("오후")||String.valueOf(m.group(3)).equals("오전"))
 		{
 
 			name = m.group(1);

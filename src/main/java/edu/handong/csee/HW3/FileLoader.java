@@ -15,24 +15,49 @@ public class FileLoader {
 		PatternCheck pc = new PatternCheck();
 		PatternFirst pf = new PatternFirst();
 		patternSecond ps = new patternSecond();
+		PatternThird pt = new PatternThird();
 		
 		Scanner inputStream = null;
 
 		
 		try {
 			File f=new File(path+fname);
-			System.out.println(f.getAbsolutePath());
+			//System.out.println(f.getAbsolutePath());
 			inputStream = new Scanner(f,"UTF-8");
-			String line = null;
+			DataStorage newds = null;
+			
 			while(inputStream.hasNextLine()) {
-				line = inputStream.nextLine();
-				if(pc.check(line))
+				String nextline = inputStream.nextLine();
+				if(nextline.contains("Synergy"))
+					System.out.println(nextline);
+				if(pf.existPattern(nextline))
 				{
-					if(pf.existPattern(line))
-						ds.add(pf.makeData(line));
-					else if(ps.existPattern(line))
-						ds.add(ps.makeData(line));
+					newds = pf.makeData(nextline);
+					ds.add(newds);
 				}
+				else if(ps.existPattern(nextline))
+				{
+					newds = ps.makeData(nextline);
+					ds.add(newds);
+				}
+				else if(pt.existPattern(nextline))
+				{
+					String line = nextline;
+					pt.savetemp(line);
+					while(inputStream.hasNextLine())
+					{
+						line = inputStream.nextLine();
+						if(line.endsWith("\""))
+						{
+							newds = pt.makeData(line);
+							ds.add(newds);
+							break;
+						}
+						else
+							pt.savetemp(line);
+					}
+				}
+				
 			}
 			inputStream.close();
 			
@@ -42,8 +67,6 @@ public class FileLoader {
 		
 		return ds;
 	}
-
-	//String fileList[] = path.list(new FilenameFilter() {
 
 
 

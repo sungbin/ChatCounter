@@ -5,7 +5,8 @@ import java.util.regex.Matcher;
 
 public class PatternFirst implements FindPattern{
 	
-	final static String pattern = "(20[0-1][0-9]-[0-1][0-9]-[0-3][1-9]\\s)([0-2][0-9]):([0-5][0-9])(:[0-5][0-9]\\,\")((?:\\D|\\d)+)(\"\\,\")((?:\\D|\\d)+)(\")";
+	final static String pattern = "(.+-.+-.+\\s)(\\d{2}):(\\d{2}):(\\d{2})\\,\"(.+)(\"\\,\")(.+)\"";
+	
 	
 	/**
 	 * Find regular expression1
@@ -35,11 +36,11 @@ public class PatternFirst implements FindPattern{
 			DataStorage data = null;
 			if(m.matches())
 			{
-			data = new DataStorage();
-			data.setHours(String.valueOf(Integer.parseInt(m.group(2))));
-			data.setKakao_id(m.group(5));
-			data.setMessage(m.group(7));
-			data.setMinutes(String.valueOf(Integer.parseInt(m.group(3))));
+				data = new DataStorage();
+				data.setHours(String.valueOf(Integer.parseInt(m.group(2))));
+				data.setKakao_id(m.group(5));
+				data.setMessage(m.group(7));
+				data.setMinutes(String.valueOf(Integer.parseInt(m.group(3))));
 			}
 			
 		return data;
