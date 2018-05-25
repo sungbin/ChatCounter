@@ -26,7 +26,7 @@ public class PatternFirst implements FindPattern{
 	}
 	
 	/**
-	 * Through regular Expression, return name.
+	 * Through regular Expression, return instance of DataStorage.
 	 */
 	public DataStorage makeData(String line) {
 		
@@ -39,7 +39,7 @@ public class PatternFirst implements FindPattern{
 				data = new DataStorage();
 				data.setHours(String.valueOf(Integer.parseInt(m.group(2))));
 				data.setKakao_id(m.group(5));
-				data.setMessage(m.group(7));
+				data.setmessage(m.group(7));
 				data.setMinutes(String.valueOf(Integer.parseInt(m.group(3))));
 			}
 			

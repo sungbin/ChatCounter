@@ -1,18 +1,18 @@
 package edu.handong.csee.HW3;
 
-public class DataStorage implements Comparable<DataStorage>{
+public class DataStorage {
 	private String kakao_id ;
 	private String hours;
 	private String minutes;
-	private String Message;
+	private String message;
 	
 	public String getKakao_id() {
 		return kakao_id;
 	}
 	@Override
 	public String toString() {
-		return "DataStorage [kakao_id=" + kakao_id + ", hours=" + hours + ", minutes=" + minutes + ", Message="
-				+ Message + "]";
+		return "DataStorage [kakao_id=" + kakao_id + ", hours=" + hours + ", minutes=" + minutes + ", message="
+				+ message + "]";
 	}
 	public String getHours() {
 		return hours;
@@ -26,11 +26,11 @@ public class DataStorage implements Comparable<DataStorage>{
 	public void setMinutes(String minutes) {
 		this.minutes = minutes;
 	}
-	public String getMessage() {
-		return Message;
+	public String getmessage() {
+		return message;
 	}
-	public void setMessage(String message) {
-		Message = message;
+	public void setmessage(String message) {
+		this.message = message;
 	}
 	public void setKakao_id(String kakao_id) {
 		this.kakao_id = kakao_id;
@@ -39,7 +39,7 @@ public class DataStorage implements Comparable<DataStorage>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Message == null) ? 0 : Message.hashCode());
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((hours == null) ? 0 : hours.hashCode());
 		result = prime * result + ((kakao_id == null) ? 0 : kakao_id.hashCode());
 		result = prime * result + ((minutes == null) ? 0 : minutes.hashCode());
@@ -54,10 +54,10 @@ public class DataStorage implements Comparable<DataStorage>{
 		if (getClass() != obj.getClass())
 			return false;
 		DataStorage other = (DataStorage) obj;
-		if (Message == null) {
-			if (other.Message != null)
+		if (message == null) {
+			if (other.message != null)
 				return false;
-		} else if (!Message.equals(other.Message))
+		} else if (!message.equals(other.message))
 			return false;
 		if (hours == null) {
 			if (other.hours != null)
@@ -75,11 +75,6 @@ public class DataStorage implements Comparable<DataStorage>{
 		} else if (!minutes.equals(other.minutes))
 			return false;
 		return true;
-	}
-	@Override
-	public int compareTo(DataStorage obj) {
-		
-		return this.getMessage().compareTo(obj.getMessage());
 	}
 
 

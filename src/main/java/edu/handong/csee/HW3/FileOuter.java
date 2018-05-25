@@ -20,25 +20,9 @@ public class FileOuter {
 
 	/**
 	 * move Data in ArrayList<DataStorage> to HashMap
-	 * and print them.
+	 * and make result file.
 	 */
-	public void out(ArrayList<DataStorage> ds, String outputName) {
-		
-		//for(DataStorage data : ds)
-			//if(data.getKakao_id().equals("남재창"))
-				//System.out.println(data);
-
-		//System.out.println("======================");
-		//Collections.sort(ds);
-		
-		System.out.println("정제된 Data-----------");
-		for(DataStorage data : ds)
-			if(data.getKakao_id().equals("Java programing"))
-			{
-				System.out.println(data);
-			}
-		
-		
+	public void makeOutFile(ArrayList<DataStorage> ds, String outputName) {
 		for(DataStorage data : ds)
 		{
 			if(all_list.containsKey(data.getKakao_id()))
@@ -46,29 +30,9 @@ public class FileOuter {
 			else
 				all_list.put(data.getKakao_id(),1);
 		}
-
-		makeResultFile(all_list, outputName);
-		
-		Iterator it2 = sortByValue(all_list).iterator();
-		
-		while(it2.hasNext())
-		{
-			String temp2 = (String) it2.next();
-			System.out.println(temp2 + ", " + all_list.get(temp2));
-		}
-		//System.out.println("===========================");
-		
-		
-	}
-	/**
-	 * will be making result file method
-	 */
-	private static void makeResultFile(TreeMap<String, Integer> all_list, String outputName)
-	{
-
 		Iterator it = sortByValue(all_list).iterator();
 		try {
-			BufferedWriter pw = new BufferedWriter(new FileWriter(new File("Data/outputData/"+outputName)));
+			BufferedWriter pw = new BufferedWriter(new FileWriter(new File(outputName)));
 
 		while(it.hasNext())
 		{
@@ -76,15 +40,16 @@ public class FileOuter {
 			pw.write(temp + ", " + all_list.get(temp)+"\n");
 		}
 			pw.close();
-		
+			System.out.println(outputName+"파일을 성공적으로 만들었습니다.");
 		} catch(Exception e)
-		{ System.out.println("파일을 읽는데 오류가 발생하였습니다.");}
-
-
-
-		
+		{ System.out.println("파일을 출력하는데 오류가 발생하였습니다.");}
 		
 	}
+	/**
+	 * in ArrayList <DataStorage>, find duplicated data.
+	 * and remove them, return the ArrayList.
+	 * store removed data to member variable ArrayList ignoredList
+	 */
 	
 	public ArrayList<DataStorage> checkDuplicate(ArrayList<DataStorage> ds)
 	{
@@ -99,8 +64,6 @@ public class FileOuter {
 			{
 				if(array[i].equals(array[j]))
 				{
-					if(array[i].getKakao_id().equals("Java programing"))
-						System.out.println("**중복**"+array[j].getMessage()); //will be remove
 					this.ignoredList.add(array[j]);
 					array[j] = nullData;
 				}
@@ -120,41 +83,17 @@ public class FileOuter {
 	public ArrayList<DataStorage> getIgnoredList() {
 		return ignoredList;
 	}
-	public void setIgnoredList(ArrayList<DataStorage> ignoredList) {
-		this.ignoredList = ignoredList;
-	}
+	
 	private static List sortByValue(final Map map) {
-
         List<String> list = new ArrayList();
-
         list.addAll(map.keySet());
-
-         
-
         Collections.sort(list,new Comparator() {
-
-             
-
             public int compare(Object o1,Object o2) {
-
                 Object v1 = map.get(o1);
-
                 Object v2 = map.get(o2);
-
-                 
-
                 return ((Comparable) v2).compareTo(v1);
-
             }
-
-             
-
         });
-
-        //Collections.reverse(list); // 주석시 오름차순
-
         return list;
-
-
     }
 }
