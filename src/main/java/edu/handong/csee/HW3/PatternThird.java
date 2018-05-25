@@ -26,7 +26,7 @@ public class PatternThird implements FindPattern {
 	@Override
 	public DataStorage makeData(String line) { //마지막 줄에 "를 읽으면 이걸 실행함.
 		PatternFirst pf = new PatternFirst();
-		return pf.makeData(templine+" "+line);
+		return pf.makeData(templine+""+line);
 		
 	}
 	
@@ -35,6 +35,6 @@ public class PatternThird implements FindPattern {
 		if(templine == null)
 			templine = line;
 		else
-			templine+=line+" ";
+			templine+=line+"";
 	}
 }

@@ -11,10 +11,9 @@ public class FileLoader {
 	 * and Output result as ArrayList <DataStorage> type.
 	 */
 	public ArrayList<DataStorage> load(String fname, String path) {
-		ArrayList<DataStorage> ds = new ArrayList<DataStorage>();
-		PatternCheck pc = new PatternCheck();
+		ArrayList<DataStorage> dslist = new ArrayList<DataStorage>();
 		PatternFirst pf = new PatternFirst();
-		patternSecond ps = new patternSecond();
+		PatternSecond ps = new PatternSecond();
 		PatternThird pt = new PatternThird();
 		
 		Scanner inputStream = null;
@@ -28,21 +27,32 @@ public class FileLoader {
 			
 			while(inputStream.hasNextLine()) {
 				String nextline = inputStream.nextLine();
-				if(nextline.contains("Synergy"))
+				nextline = nextline.replaceAll(" \"", "\"");
+				nextline = nextline.trim();
+				
+				if(nextline.contains("Java programing"))
+				{
 					System.out.println(nextline);
+				}
 				if(pf.existPattern(nextline))
 				{
 					newds = pf.makeData(nextline);
-					ds.add(newds);
+					dslist.add(newds);
 				}
 				else if(ps.existPattern(nextline))
 				{
 					newds = ps.makeData(nextline);
-					ds.add(newds);
+					dslist.add(newds);
 				}
 				else if(pt.existPattern(nextline))
 				{
-					String line = nextline;
+					nextline += "\"";
+					newds = pf.makeData(nextline); //wiil be change
+					dslist.add(newds);
+					if(newds.getKakao_id().equals("남재창"))
+					System.out.println("&& \"로 안끝남: "+nextline);
+					
+					/*String line = nextline;
 					pt.savetemp(line);
 					while(inputStream.hasNextLine())
 					{
@@ -55,9 +65,8 @@ public class FileLoader {
 						}
 						else
 							pt.savetemp(line);
-					}
+					}*/
 				}
-				
 			}
 			inputStream.close();
 			
@@ -65,7 +74,7 @@ public class FileLoader {
 			e.printStackTrace();
 		}
 		
-		return ds;
+		return dslist;
 	}
 
 

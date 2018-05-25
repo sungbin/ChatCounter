@@ -79,7 +79,7 @@ public class DataStorage implements Comparable<DataStorage>{
 	@Override
 	public int compareTo(DataStorage obj) {
 		
-		return this.getKakao_id().compareTo(obj.getKakao_id());
+		return this.getMessage().compareTo(obj.getMessage());
 	}
 
 

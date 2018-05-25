@@ -3,7 +3,7 @@ package edu.handong.csee.HW3;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class patternSecond implements FindPattern{
+public class PatternSecond implements FindPattern{
 
 	final static String pattern = "\\[(.*?)\\]\\s\\[((.*)?\\s)?(\\d+):(\\d+)(?:\\s([A-Z]{2})|.?)\\]\\s(.*?)";
 	/**
@@ -67,17 +67,17 @@ public class patternSecond implements FindPattern{
 		}
 		
 		data.setKakao_id(name);
-		data.setHours(hours);
-		data.setMinutes(minutes);
+		data.setHours(String.valueOf(Integer.parseInt(hours)));
+		data.setMinutes(String.valueOf(Integer.parseInt(minutes)));
 		data.setMessage(message);
 	
 		
 		int currentHours = Integer.parseInt(data.getHours());
 	
-		if(amORpm.equals("오후")||amORpm.equals("PM"))
+		if(currentHours!=12&&amORpm.equals("오후")||currentHours!=12&&amORpm.equals("PM"))
 			currentHours += 12;
-		if (currentHours>24)
-			currentHours -= 24;
+		if (currentHours>=12 &&amORpm.equals("오전")||currentHours>=12 &&amORpm.equals("AM") )
+			currentHours -= 12;
 		data.setHours(String.valueOf(currentHours));
 		}
 		return data;

@@ -23,8 +23,10 @@ public class ChatCounter {
 	{
 		FileLoader fl = new FileLoader();
 		FileOuter fo = new FileOuter();
+		FileOuter fo2 = new FileOuter();
 		String outputName = null;
 		String path = null;
+		ArrayList <DataStorage> Dslist = null;
 		
 		System.out.println("Path를 입력하세요.(아무것도 입력하지 않으면 /Users/imseongbin/Documents/Java/ChatCounter/Data/)");
 		path=in.nextLine();
@@ -38,12 +40,15 @@ public class ChatCounter {
 		String[] fileList = ChatCounter.FillInFileList(path);
 		
 		ArrayList<DataStorage> sumOfData = new ArrayList<DataStorage>();
-		
 		for(String filename : fileList)
 		{
 			
-			sumOfData.addAll((fl.load(filename,path)));
+			Dslist = (fl.load(filename,path));
+			fo2.checkDuplicate(Dslist);
+			sumOfData.addAll(Dslist);
 		}
+		sumOfData = fo.checkDuplicate(sumOfData);
+		sumOfData.addAll(fo2.getIgnoredList());
 		fo.out(sumOfData,outputName);
 		
 	}

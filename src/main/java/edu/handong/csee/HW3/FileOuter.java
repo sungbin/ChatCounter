@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 public class FileOuter {
 	private TreeMap<String, Integer> all_list = new TreeMap<String, Integer>();
+	private ArrayList<DataStorage> ignoredList = new ArrayList<DataStorage>();
 
 	/**
 	 * move Data in ArrayList<DataStorage> to HashMap
@@ -23,16 +24,20 @@ public class FileOuter {
 	 */
 	public void out(ArrayList<DataStorage> ds, String outputName) {
 		
-		for(DataStorage data : ds)
-			if(data.getKakao_id().equals("Synergy"))
-				System.out.println(data.getMessage());
+		//for(DataStorage data : ds)
+			//if(data.getKakao_id().equals("남재창"))
+				//System.out.println(data);
+
+		//System.out.println("======================");
+		//Collections.sort(ds);
 		
-		ds = checkDuplicate(ds);
-		
-		System.out.println("======================");
+		System.out.println("정제된 Data-----------");
 		for(DataStorage data : ds)
-			if(data.getKakao_id().equals("Synergy"))
+			if(data.getKakao_id().equals("Java programing"))
+			{
 				System.out.println(data);
+			}
+		
 		
 		for(DataStorage data : ds)
 		{
@@ -51,7 +56,7 @@ public class FileOuter {
 			String temp2 = (String) it2.next();
 			System.out.println(temp2 + ", " + all_list.get(temp2));
 		}
-		System.out.println("===========================");
+		//System.out.println("===========================");
 		
 		
 	}
@@ -81,26 +86,22 @@ public class FileOuter {
 		
 	}
 	
-	private static ArrayList<DataStorage> checkDuplicate(ArrayList<DataStorage> ds)
+	public ArrayList<DataStorage> checkDuplicate(ArrayList<DataStorage> ds)
 	{
 		DataStorage[] array = new DataStorage[ds.size()];
 		DataStorage nullData = null;
-		
 		int size=0;
-
 		for(DataStorage temp : ds){
-
 		  array[size++] = temp;
-
 		}
-		
-		for(int i=1;i<size;i++)
-			for(int j=0;j<i;j++)
+		for(int i=size-2;i>=0;i--)
+			for(int j=i+1;j<size-1;j++)
 			{
 				if(array[i].equals(array[j]))
 				{
-					if(array[i].getKakao_id().equals("Synergy"))
-						System.out.println("***중복:"+array[i].toString()); //will be remove
+					if(array[i].getKakao_id().equals("Java programing"))
+						System.out.println("**중복**"+array[j].getMessage()); //will be remove
+					this.ignoredList.add(array[j]);
 					array[j] = nullData;
 				}
 			}
@@ -111,13 +112,17 @@ public class FileOuter {
 			if(temp==null)
 				continue;
 			newDs.add(temp);
-			}
+		}
 		
 		return newDs;
-
-		
 	}
 	
+	public ArrayList<DataStorage> getIgnoredList() {
+		return ignoredList;
+	}
+	public void setIgnoredList(ArrayList<DataStorage> ignoredList) {
+		this.ignoredList = ignoredList;
+	}
 	private static List sortByValue(final Map map) {
 
         List<String> list = new ArrayList();
