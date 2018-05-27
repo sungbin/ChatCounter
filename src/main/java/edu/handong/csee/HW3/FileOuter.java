@@ -60,7 +60,7 @@ public class FileOuter {
 		  array[size++] = temp;
 		}
 		for(int i=size-2;i>=0;i--)
-			for(int j=i+1;j<size-1;j++)
+			for(int j=i+1;j<size;j++)
 			{
 				if(array[i].equals(array[j]))
 				{

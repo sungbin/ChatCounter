@@ -29,7 +29,6 @@ public class FileLoader {
 			BufferedReader br = new BufferedReader(
                   new InputStreamReader(
                                new FileInputStream(f), "UTF-8"));
-			
 			while ((nextline = br.readLine()) != null)  {
 				nextline = nextline.replaceAll(" \"", "\"");
 				nextline = nextline.trim();
