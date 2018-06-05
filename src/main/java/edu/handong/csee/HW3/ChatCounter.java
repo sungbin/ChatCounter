@@ -54,6 +54,10 @@ public class ChatCounter
 				if(!isStringDouble(numOfThreadStringType))
 					throw new Exception("-c 옵션에는 숫자만 입력해야합니다.");
 				numOfThread = Integer.parseInt(numOfThreadStringType);
+				
+				if(numOfThread<0)
+					throw new Exception("-c 옵션에는 양의 정수를 입력하세요.");
+				
 				if(numOfThread>fileList.length)
 					numOfThread = fileList.length;
 				
