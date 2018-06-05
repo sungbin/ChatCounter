@@ -1,37 +1,46 @@
 package edu.handong.csee.HW3;
 
-import java.util.Scanner;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
-public class ChatCounter {
-	Scanner in = new Scanner(System.in);
-	String path;
-	boolean verbose;
-	boolean help;
-	String outputName;
+public class ChatCounter 
+{
+	private String path;
+	private boolean verbose;
+	private boolean help;
+	private String outputName;
+	private String numOfThreadStringType;
+	
+
+	
 	/**
 	 * @param main method
 	 */
 	public static void main(String[] args) {
 		ChatCounter count = new ChatCounter();
-		count.run(args);
+		count.run(args,count);
 	}
 	
 	/**
 	 * support main method
 	 */
-	public void run(String[] args)
+	public void run(String[] args,ChatCounter cctt)
 	{
+
 		Options options = createOptions();
+		FileOuter fo = new FileOuter();
+		ArrayList<DataStorage> sumOfData = new ArrayList<DataStorage>();
+		int temp;
+		int numOfThread;
+		int numOfFile;
 		
 		if(parseOptions(options, args)){
 			if (help){
@@ -39,30 +48,65 @@ public class ChatCounter {
 				return;
 			}
 			
-			
-			
-			FileLoader fl = new FileLoader();
-			FileOuter fo = new FileOuter();
-			FileOuter fo2 = new FileOuter();
-			ArrayList <DataStorage> Dslist = null;
-			
 			try {
 				String[] fileList = ChatCounter.FillInFileList(path+"/");
 				
-				ArrayList<DataStorage> sumOfData = new ArrayList<DataStorage>();
-				for(String filename : fileList)
-				{
-					Dslist = (fl.makeDataList(filename,path));
-					System.out.println(filename+"을 읽는데 성공하였습니다.");
-					fo2.checkDuplicate(Dslist);
-					sumOfData.addAll(Dslist);
-				}
-				sumOfData = fo.checkDuplicate(sumOfData);
-				sumOfData.addAll(fo2.getIgnoredList());
+				if(!isStringDouble(numOfThreadStringType))
+					throw new Exception("-c 옵션에는 숫자만 입력해야합니다.");
+				numOfThread = Integer.parseInt(numOfThreadStringType);
+				if(numOfThread>fileList.length)
+					numOfThread = fileList.length;
 				
+				numOfFile = fileList.length; 
+				String dividedFileList[][] =null;
+				temp = numOfFile / numOfThread;
+				dividedFileList = new String[numOfThread][temp+(numOfFile%numOfThread)];
+				
+				int y = 0;
+				int x = 0;
+				for(int i =0; i<numOfFile;i++)
+				{
+					dividedFileList[y][x] = fileList[i];
+					x++;
+					if((i+1)%temp==0&&(numOfFile-numOfFile%numOfThread)>(i+1))
+					{
+						y++;
+					}
+					if(x==temp&&(numOfFile-numOfFile%numOfThread)>(i+1))
+						x=0;
+				}
+				
+				ArrayList<FileLoader> flList = new ArrayList<FileLoader>();
+				for(String[] filelist :dividedFileList)
+				{
+					if(fileList == null)
+						continue;
+					flList.add(new FileLoader(filelist, path));
+				}
+				
+				for(FileLoader fl : flList)
+				{
+						fl.start();
+						fl.join();
+				}
+					
+				for(FileLoader fl : flList)
+				{
+					sumOfData.addAll(fl.getDslist());
+				}
+					
+				sumOfData = fo.checkDuplicate(sumOfData);
+					
+				for(FileLoader fl : flList)
+				{
+					sumOfData.addAll(fl.getAddAffterDslist());
+				}
+					
 				fo.makeOutFile(sumOfData,outputName);
+				
 			} catch(Exception e) { System.out.println(e.getMessage());}
-			if(verbose) {
+			
+		if(verbose) {
 				System.out.println("******The program help parsing KaKaoTal Message");
 				System.out.println("******You should appoint path of directory including data files(.csv or .txt)");
 				System.out.println("******You should appoint path or file name too");
@@ -104,6 +148,7 @@ public class ChatCounter {
 
 			CommandLine cmd = parser.parse(options, args);
 
+			numOfThreadStringType = cmd.getOptionValue("c");
 			path = cmd.getOptionValue("i");
 			outputName = cmd.getOptionValue("o");
 			
@@ -119,7 +164,15 @@ public class ChatCounter {
 	}
 	private Options createOptions() {
 		Options options = new Options();
-
+		
+		//add options Threads
+		options.addOption(Option.builder("c").longOpt("thread")
+				.desc("Set number of ` using calculate")
+				.hasArg()
+				.argName("number of thread")
+				.required()
+				.build());
+		
 		// add options by using OptionBuilder
 		options.addOption(Option.builder("i").longOpt("path")
 				.desc("Set a path of a directory to display")
@@ -158,5 +211,13 @@ public class ChatCounter {
 		String footer ="\nPlease report issues at https://github.com/sungbin/ChatCounter";
 		formatter.printHelp("ChatCounter", header, options, footer, true);
 	}
+	private static boolean isStringDouble(String s) {
+	    try {
+	        Double.parseDouble(s);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        return false;
+	    }
+	  }
 
 }
