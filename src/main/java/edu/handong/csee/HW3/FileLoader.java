@@ -13,8 +13,8 @@ public class FileLoader extends Thread {
 	 * @param fnamelist
 	 * @param path
 	 */
-	public FileLoader(String[] fnamelist, String path) {
-		this.fnamelist = fnamelist;
+	public FileLoader(String fname, String path) {
+		this.fname = fname;
 		this.path = path;
 	}
 
@@ -25,7 +25,7 @@ public class FileLoader extends Thread {
 	private PatternThird pt = new PatternThird();
 	private String nextline;
 	private String path;
-	private String[] fnamelist;
+	private String fname;
 	private FileOuter fo = new FileOuter();
 
 	@Override
@@ -35,10 +35,7 @@ public class FileLoader extends Thread {
 	 * return data
 	 */
 	public void run() {
-		for (String fname : fnamelist) {
-			ArrayList<DataStorage> dslist = new ArrayList<DataStorage>();
-			if (fname == null)
-				continue;
+		ArrayList<DataStorage> dslist =new ArrayList<DataStorage>();
 			try {
 				File f = new File(path + "/" + fname);
 				DataStorage newds = null;
@@ -69,7 +66,6 @@ public class FileLoader extends Thread {
 			dslist = fo.checkDuplicate(dslist);
 			ddslist.addAll(dslist);
 			addAffterDslist = fo.getIgnoredList();
-		}
 	}
 	
 	/**

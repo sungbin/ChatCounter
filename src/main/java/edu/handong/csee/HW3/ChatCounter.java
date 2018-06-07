@@ -10,6 +10,8 @@ import org.apache.commons.cli.Options;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ChatCounter 
 {
@@ -26,21 +28,19 @@ public class ChatCounter
 	 */
 	public static void main(String[] args) {
 		ChatCounter count = new ChatCounter();
-		count.run(args,count);
+		count.run(args);
 	}
 	
 	/**
 	 * support main method
 	 */
-	public void run(String[] args,ChatCounter cctt)
+	public void run(String[] args)
 	{
 
 		Options options = createOptions();
 		FileOuter fo = new FileOuter();
 		ArrayList<DataStorage> sumOfData = new ArrayList<DataStorage>();
-		int temp;
 		int numOfThread;
-		int numOfFile;
 		
 		if(parseOptions(options, args)){
 			if (help){
@@ -55,44 +55,23 @@ public class ChatCounter
 					throw new Exception("-c 옵션에는 숫자만 입력해야합니다.");
 				numOfThread = Integer.parseInt(numOfThreadStringType);
 				
+				ExecutorService executor = Executors.newFixedThreadPool(numOfThread);
+				
 				if(numOfThread<0)
 					throw new Exception("-c 옵션에는 양의 정수를 입력하세요.");
 				
-				if(numOfThread>fileList.length)
-					numOfThread = fileList.length;
-				
-				numOfFile = fileList.length; 
-				String dividedFileList[][] =null;
-				temp = numOfFile / numOfThread;
-				dividedFileList = new String[numOfThread][temp+(numOfFile%numOfThread)];
-				
-				int y = 0;
-				int x = 0;
-				for(int i =0; i<numOfFile;i++)
-				{
-					dividedFileList[y][x] = fileList[i];
-					x++;
-					if((i+1)%temp==0&&(numOfFile-numOfFile%numOfThread)>(i+1))
-					{
-						y++;
-					}
-					if(x==temp&&(numOfFile-numOfFile%numOfThread)>(i+1))
-						x=0;
-				}
 				
 				ArrayList<FileLoader> flList = new ArrayList<FileLoader>();
-				for(String[] filelist :dividedFileList)
+				for(String newfile :fileList)
 				{
-					if(fileList == null)
-						continue;
-					flList.add(new FileLoader(filelist, path));
+					Runnable worker = new FileLoader(newfile, path);
+					executor.execute(worker);
+					
+					flList.add((FileLoader)worker);
 				}
-				
-				for(FileLoader fl : flList)
-				{
-						fl.start();
-						fl.join();
-				}
+				executor.shutdown();
+				while (!executor.isTerminated()) {
+		        }
 					
 				for(FileLoader fl : flList)
 				{
